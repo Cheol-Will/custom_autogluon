@@ -1123,25 +1123,26 @@ class TabularPredictor:
         resource_manager: ResourceManager = get_resource_manager()
         include_gpu_count = resource_manager.get_gpu_count_torch() or verbosity >= 3
         sys_msg = get_ag_system_info(path=self.path, include_gpu_count=include_gpu_count)
-        logger.log(20, sys_msg)
+        # logger.log(20, sys_msg)
 
         if presets:
             if not isinstance(presets, list):
                 presets = [presets]
             logger.log(20, f"Presets specified: {presets}")
         else:
-            logger.log(
-                20,
-                "No presets specified! To achieve strong results with AutoGluon, it is recommended to use the available presets. Defaulting to `'medium'`...\n"
-                "\tRecommended Presets (For more details refer to https://auto.gluon.ai/stable/tutorials/tabular/tabular-essentials.html#presets):\n"
-                "\tpresets='extreme'  : New in v1.5: The state-of-the-art for tabular data. Massively better than 'best' on datasets <100000 samples by using new Tabular Foundation Models (TFMs) meta-learned on https://tabarena.ai: TabPFNv2, TabICL, Mitra, TabDPT, and TabM. Requires a GPU and `pip install autogluon.tabular[tabarena]` to install TabPFN, TabICL, and TabDPT.\n"
-                "\tpresets='best'     : Maximize accuracy. Recommended for most users. Use in competitions and benchmarks.\n"
-                "\tpresets='best_v150': New in v1.5: Better quality than 'best' and 5x+ faster to train. Give it a try!\n"
-                "\tpresets='high'     : Strong accuracy with fast inference speed.\n"
-                "\tpresets='high_v150': New in v1.5: Better quality than 'high' and 5x+ faster to train. Give it a try!\n"
-                "\tpresets='good'     : Good accuracy with very fast inference speed.\n"
-                "\tpresets='medium'   : Fast training time, ideal for initial prototyping.",
-            )
+            pass
+            # logger.log(
+            #     20,
+            #     "No presets specified! To achieve strong results with AutoGluon, it is recommended to use the available presets. Defaulting to `'medium'`...\n"
+            #     "\tRecommended Presets (For more details refer to https://auto.gluon.ai/stable/tutorials/tabular/tabular-essentials.html#presets):\n"
+            #     "\tpresets='extreme'  : New in v1.5: The state-of-the-art for tabular data. Massively better than 'best' on datasets <100000 samples by using new Tabular Foundation Models (TFMs) meta-learned on https://tabarena.ai: TabPFNv2, TabICL, Mitra, TabDPT, and TabM. Requires a GPU and `pip install autogluon.tabular[tabarena]` to install TabPFN, TabICL, and TabDPT.\n"
+            #     "\tpresets='best'     : Maximize accuracy. Recommended for most users. Use in competitions and benchmarks.\n"
+            #     "\tpresets='best_v150': New in v1.5: Better quality than 'best' and 5x+ faster to train. Give it a try!\n"
+            #     "\tpresets='high'     : Strong accuracy with fast inference speed.\n"
+            #     "\tpresets='high_v150': New in v1.5: Better quality than 'high' and 5x+ faster to train. Give it a try!\n"
+            #     "\tpresets='good'     : Good accuracy with very fast inference speed.\n"
+            #     "\tpresets='medium'   : Fast training time, ideal for initial prototyping.",
+            # )
 
         kwargs_orig = kwargs.copy()
 
@@ -1453,11 +1454,11 @@ class TabularPredictor:
         return self
 
     def _fit(self, ag_fit_kwargs: dict, ag_post_fit_kwargs: dict):
-        self.save(silent=True)  # Save predictor to disk to enable prediction and training after interrupt
+        # self.save(silent=True)  # Save predictor to disk to enable prediction and training after interrupt
         self._learner.fit(**ag_fit_kwargs)
         self._set_post_fit_vars()
         self._post_fit(**ag_post_fit_kwargs)
-        self.save()
+        # self.save()
 
     # TODO: When >2 layers, will only choose between using all layers or using only base models. Would be better to choose the optimal layer.
     def _dynamic_stacking(
