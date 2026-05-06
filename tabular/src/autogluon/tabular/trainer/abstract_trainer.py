@@ -4985,6 +4985,10 @@ class AbstractTabularTrainer(AbstractTrainer[AbstractModel]):
                 f"quantile_levels must be None when problem_type='{problem_type}' (quantile_levels={quantile_levels})"
             )
 
+    def remove_model(self, model_name: str) -> None:
+        path = self.get_model_attribute(model=model_name, attribute="path")
+        os.unlink(os.path.join(self.path, path))
+
 
 def _detached_train_multi_fold(
     *,

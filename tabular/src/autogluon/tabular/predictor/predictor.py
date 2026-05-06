@@ -5291,7 +5291,6 @@ class TabularPredictor:
 
         if predictor is None:
             predictor = cls._load(path=path)
-
         return predictor
 
     @classmethod

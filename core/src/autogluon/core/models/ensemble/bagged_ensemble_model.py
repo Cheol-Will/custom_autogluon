@@ -958,6 +958,7 @@ class BaggedEnsembleModel(AbstractModel):
             self._k = k_fold
             self._k_fold_end = k_fold_end
             self._n_repeats_finished = self._n_repeats - 1
+        print(f"Done: _fit_folds")
 
     @staticmethod
     def _generate_fold_configs(
@@ -1209,6 +1210,7 @@ class BaggedEnsembleModel(AbstractModel):
             path = self.path
         child = self.load_child(model)
         child.set_contexts(os.path.join(path, child.name))
+        # print(f"Bagged_ensemble_model saves child into {os.path.join(path, child.name)}")
         child.save(verbose=verbose)
 
     def can_compile(self, compiler_configs=None):
